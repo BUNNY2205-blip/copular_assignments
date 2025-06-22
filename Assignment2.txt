@@ -1,0 +1,20 @@
+Assignment 2
+1) Do practise of the session
+
+2) In your last program where you find the total and percentage of a student's marks of 5 subject, find the grade of the student using conditional statement. Eg. grade 'A' if percentage is greator than or equals to 60, 'B' for  percentage is greator than or equals to 50 and less than 60,  'C' for  percentage is greator than or equals to 40 and less than 50,  'D' for  percentage is greator than or equals to 33 and less than 40, otherwise 'Fail'
+
+
+3) Input a number from user and find its factorial using for loop
+
+
+4) Create a billing program using list. Program should have options to 
+1. Create Bill
+2. Display Item Price and total bill amount
+3. Display Total
+4. Exit
+
+
+5) Write a  Python program to find the smallest number in a list.
+Write a  Python program to find the second greatest number in a list.
+Write a  Python program to find the second smallest number in a list.
+
