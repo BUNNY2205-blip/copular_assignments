@@ -1,0 +1,11 @@
+MERGE
+1. Merge uses columns
+2. We must specify 'on' column if not same
+3. It is more flexible for complex joins
+4. It handles overlapping column name well
+
+JOIN
+1. Joins uses index
+2. It joins on index by default
+3. It is simpler and mainly for quick index joins
+4. It gives error if column names are overlapping
