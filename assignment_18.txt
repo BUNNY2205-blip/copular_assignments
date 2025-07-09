@@ -1,0 +1,65 @@
+CODE FOR RAW LAYER
+df = spark.table("student_2")   #accessing or reading the table using spark
+df = df.withColumnRenamed("Table-name", "table_name") \
+       .withColumnRenamed("Raw-col", "column_name") \
+       .withColumnRenamed("Data-type", "data_type") #Renaming the column as it was creating error
+table = {} #creating an empty dictionary 
+for row in df.collect():  #here the collect function converts our spark data frame into a list of python row objects
+    tname = row['table_name']
+    cname = row['column_name']
+    dtype = row['data_type']
+    col_def = f"{cname} {dtype}"
+    if tname not in table:
+        table[tname] = []
+    table[tname].append(col_def)
+for tname, cols in table.items():
+    drop_stmt = f"DROP TABLE IF EXISTS `{tname}`" #deleting the table if it exists and creating it again
+    spark.sql(drop_stmt)
+    create_stmt = f"CREATE TABLE IF NOT EXISTS `{tname}` ({', '.join(cols)})" #statment for the creation of table
+    spark.sql(create_stmt)
+
+
+
+
+
+CODE FOR CURATED LAYER
+df = spark.table("student_2")   #accessing or reading the table using spark
+df = df.withColumnRenamed("curated_t", "table_name") \
+       .withColumnRenamed("curated_c", "column_name") \
+       .withColumnRenamed("curated_d", "data_type") #Renaming the column as it was creating error
+table = {} #creating an empty dictionary 
+for row in df.collect():  #here the collect function converts our spark data frame into a list of python row objects
+    tname = row['table_name']
+    cname = row['column_name']
+    dtype = row['data_type']
+    col_def = f"{cname} {dtype}"
+    if tname not in table:
+        table[tname] = []
+    table[tname].append(col_def)
+for tname, cols in table.items():
+    drop_stmt = f"DROP TABLE IF EXISTS `{tname}`" #deleting the table if it exists and creating it again
+    spark.sql(drop_stmt)
+    create_stmt = f"CREATE TABLE IF NOT EXISTS `{tname}` ({', '.join(cols)})" #statment for the creation of table
+    spark.sql(create_stmt)
+
+
+    CODE FOR PRESENTATION LAYER
+
+    df = spark.table("student_2")   #accessing or reading the table using spark
+df = df.withColumnRenamed("presentation_t", "table_name") \
+       .withColumnRenamed("presentation_c", "column_name") \
+       .withColumnRenamed("presentation_d", "data_type") #Renaming the column as it was creating error
+table = {} #creating an empty dictionary 
+for row in df.collect():  #here the collect function converts our spark data frame into a list of python row objects
+    tname = row['table_name']
+    cname = row['column_name']
+    dtype = row['data_type']
+    col_def = f"{cname} {dtype}"
+    if tname not in table:
+        table[tname] = []
+    table[tname].append(col_def)
+for tname, cols in table.items():
+    drop_stmt = f"DROP TABLE IF EXISTS `{tname}`" #deleting the table if it exists and creating it again
+    spark.sql(drop_stmt)
+    create_stmt = f"CREATE TABLE IF NOT EXISTS `{tname}` ({', '.join(cols)})" #statment for the creation of table
+    spark.sql(create_stmt)
