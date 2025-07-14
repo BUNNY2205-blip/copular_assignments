@@ -1,0 +1,67 @@
+First assignment
+dbutils.fs.ls("dbfs:/Volumes/workspace/skit_assignment/sales_raw_data/")
+
+Showing only the few rows for analyzing
+df = spark.read.csv("/Volumes/workspace/skit_assignment/sales_raw_data/Sales.csv",header = True, inferSchema=True)
+df_limit = df.limit(6)
+display(df_limit)
+
+Filtering the data in sales taking sales only above 1000
+from pyspark.sql.functions import col
+
+df_filtered = df.filter(col("sales") > 1000)
+display(df_filtered)
+
+Selecting the desired columns in the database
+df_selected = df_filtered.select("ORDERNUMBER", "sales", "QUANTITYORDERED", "STATUS", "PRODUCTLINE")
+display(df_selected)
+
+Writing the table into delta table
+df_selected.write \
+    .format("delta") \
+    .mode("append") \
+    .saveAsTable("skit_assignment.agg_sales_data")
+
+Checking the data history of the table
+df_history = spark.sql("DESCRIBE HISTORY skit_assignment.agg_sales_data")
+display(df_history)
+
+Reading the data from the specific version
+version_number = 0
+df_specific_version = spark.read.format("delta").option("versionAsOf", version_number).table("skit_assignment.agg_sales_data")
+display(df_specific_version)
+
+Performing all the advanced transformations
+#applying filter for advanced
+df_transformed = df.filter(
+    (df["STATUS"] == "shipped") & 
+    (df["PRODUCTLINE"] == "motorcycles")
+)
+display(df_transformed)
+
+
+ASSIGNMENT 2 GROUPING THE SALES DATA ACCORDINGLY
+
+Loading the CSV file
+df = spark.read.csv("/Volumes/workspace/skit_assignment/sales_raw_data/Sales.csv",header = True, inferSchema=True)
+df_limit = df.limit(6)
+display(df_limit)
+
+Selecting relevant columns
+df_selected = df.select("SALES","PRODUCTLINE","STATUS","ORDERNUMBER","CITY")
+display(df_selected)
+
+Filtering the data
+df_filtered = df_selected.filter(df_selected.SALES > 1000)
+display(df_filtered)
+
+Grouping the data
+df_grouped = df_filtered.groupBy("CITY").sum("SALES").withColumnRenamed("sum(Sales)", "Total_Sales")
+display(df_grouped)
+
+Writing the aggreagate data into the delta table
+df_grouped.write.format("delta").mode("overwrite").saveAsTable("delta_aggregate")
+display(spark.table("delta_aggregate"))
+
+
+
